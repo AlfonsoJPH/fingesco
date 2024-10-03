@@ -22,8 +22,8 @@ Actualmente esto solo se usara como plantilla de un posible TFM para probar y de
 
 ## Estructura del Repositorio
 Este repositorio incluye los siguientes submódulos:
-- **Backend**: Contiene la lógica del servidor y la API. (Ruta: `fingesco-back/`)
-- **Frontend**: Interfaz de usuario construida con [React/otro framework]. (Ruta: `fingesco-front/`)
+- **Backend**: Contiene la lógica del servidor y la API. (Ruta: `fingesco-backend/`)
+- **Frontend**: Interfaz de usuario construida con React. (Ruta: `fingesco-frontend/`)
 - **Módulos**: Carpeta que contiene módulos reutilizables y utilidades. (Ruta: `modules/`)
 
 ## Requisitos
@@ -38,7 +38,7 @@ Para instalar el proyecto, sigue estos pasos:
    ```bash
    git clone https://github.com/AlfonsoJPH/fingesco.git
    cd fingesco
-   
+
 2. **Inicializar submódulos**:
 
    ```bash
