@@ -68,4 +68,4 @@ Si deseas contribuir a este proyecto, sigue estos pasos:
 
 # Licencia
 
-Este proyecto está bajo la [Nombre de la licencia] - consulta el archivo LICENSE para más detalles.
+Este proyecto está bajo la GNU Affero General Public License v3.0 - consulta el archivo LICENSE para más detalles.
