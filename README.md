@@ -38,11 +38,12 @@ Para instalar el proyecto, sigue estos pasos:
    ```bash
    git clone https://github.com/AlfonsoJPH/fingesco.git
    cd fingesco
+   
 2. **Inicializar submódulos**:
 
-
-git submodule init
-git submodule update
+   ```bash
+   git submodule init
+   git submodule update
 
 3. **Instalar dependencias del Backend**:
 
