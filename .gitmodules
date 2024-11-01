@@ -4,3 +4,6 @@
 [submodule "fingesco-frontend"]
 	path = fingesco-frontend
 	url = https://github.com/AlfonsoJPH/fingesco-frontend.git
+[submodule "fingesco-endpoint"]
+	path = fingesco-endpoint
+	url = https://github.com/AlfonsoJPH/fingesco-endpoint.git
