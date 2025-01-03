@@ -84,6 +84,127 @@ API_KEY=pcldETTDtJ4CQVz9FqlJYHgIvdYP1iXU
 Para implementar y ejecutar los tests, he utilizado `Supertest` para simular solicitudes HTTP y verificar la lógica de negocio clave en los endpoints. Los tests se ejecutan de forma centralizada con `npm test`, tanto en local como en Jenkins.
 
 
+### 
+
+# Hito 4: Composición de servicios
+
+## Documentación y justificación de la estructura del clúster de contenedores
+
+### Estructura del clúster de contenedores
+
+El clúster de contenedores está compuesto por tres servicios principales:
+- **Frontend**: Un contenedor que sirve la aplicación React utilizando Nginx.
+- **Endpoint**: Un contenedor que ejecuta el microservicio Express.js.
+- **Redis**: Un contenedor que almacena los datos.
+
+### Configuración de los contenedores
+
+#### Dockerfile del frontend
+
+```dockerfile
+# Usar una imagen base de Node.js
+FROM node:14-alpine
+
+# Establecer el directorio de trabajo
+WORKDIR /app
+
+# Copiar el archivo package.json y package-lock.json
+COPY package*.json ./
+
+# Instalar las dependencias
+RUN npm install
+
+# Copiar el resto del código de la aplicación
+COPY . .
+
+# Construir la aplicación para producción
+RUN npm run build
+
+# Usar una imagen base de Nginx para servir la aplicación
+FROM nginx:alpine
+
+# Copiar los archivos de construcción de React al directorio de Nginx
+COPY --from=0 /app/build /usr/share/nginx/html
+
+# Exponer el puerto 80
+EXPOSE 80
+
+# Comando para iniciar Nginx
+CMD ["nginx", "-g", "daemon off;"]
+```
+
+#### Dockerfile del endpoint
+
+```dockerfile
+# Usar una imagen base de Node.js
+FROM node:14-alpine
+
+# Establecer el directorio de trabajo
+WORKDIR /app
+
+# Copiar el archivo package.json y package-lock.json
+COPY package*.json ./
+
+# Instalar las dependencias
+RUN npm install
+
+# Copiar el resto del código de la aplicación
+COPY . .
+
+# Exponer el puerto 3001
+EXPOSE 3001
+
+# Comando para iniciar la aplicación
+CMD ["node", "src/app.js"]
+```
+
+c### Fichero de composición del clúster de contenedores `docker-compose.yml`
+
+```yaml
+version: '3.8'
+
+services:
+  frontend:
+    build: ./fingesco-frontend
+    ports:
+      - "3000:80"
+    environment:
+      - REACT_APP_API_BASE_URL=http://localhost:3001
+      - REACT_APP_API_KEY=pcldETTDtJ4CQVz9FqlJYHgIvdYP1iXU
+    depends_on:
+      - endpoint
+
+  endpoint:
+    build: ./fingesco-endpoint
+    ports:
+      - "3001:3001"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - SERVER_PORT=3001
+      - API_KEY=pcldETTDtJ4CQVz9FqlJYHgIvdYP1iXU
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+
+volumes:
+  redis-data:
+```
+
+### Publicación del contenedor en GitHub Packages
+
+El contenedor se ha publicado correctamente en GitHub Packages y se ha configurado la actualización automática mediante GitHub Actions. El archivo `.github/workflows/docker-build.yml` se encarga de construir y publicar la imagen automáticamente al recibir un nuevo push en el repositorio.
+
+### Ejecución del clúster y validación
+
+Para ejecutar el clúster y validar su funcionamiento, se ha añadido un test que construye el clúster y responde a algunas peticiones en jenkins siguiendo la metodologia del hito 2.
+
 ## Índice
 - [Características](#características)
 - [Estructura del Repositorio](#estructura-del-repositorio)
