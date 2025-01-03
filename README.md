@@ -27,6 +27,62 @@ Para implementar y ejecutar los tests, me aseguro de verificar la lógica de neg
 
 Todo lo relacionado con la configuración de Jenkins y la ejecución de las pruebas se encuentra en la carpeta [fingesco-endpoint/tests](https://github.com/AlfonsoJPH/fingesco-endpoint/tree/19b9a051ecf9d540419668748e78b12ee53dda9c/tests)
 
+## Hito 3: Diseño de microservicios
+
+Para este hito, he creado un microservicio sobre la base de la funcionalidad desarrollada en el hito anterior. He diseñado una API consistente en una serie de rutas, añadido un sistema de logs, y testeado la API exhaustivamente usando bibliotecas específicas.
+
+### Justificación técnica del framework elegido
+
+He elegido **Express.js** como framework para el microservicio debido a su simplicidad y flexibilidad. Express.js es un framework minimalista y robusto para Node.js que facilita la creación de aplicaciones web y APIs REST. Su amplia comunidad y ecosistema de middleware lo hacen ideal para este tipo de proyectos.
+
+### Diseño de la API
+
+La API se ha diseñado con un enfoque REST, separando la lógica de negocio de la lógica del API. Las rutas principales incluyen:
+
+- **GET /recursos**: Obtiene todos los recursos.
+- **GET /sensores**: Obtiene todos los sensores.
+
+### Sistema de logs
+
+Se ha elegido **winston** como biblioteca de logging debido a su flexibilidad y capacidad para manejar múltiples transportes (consola, archivos, etc.). Winston permite configurar diferentes niveles de logs (info, error, warning) y formatear los mensajes de log de manera personalizada. Los logs se registran tanto en la consola como en un archivo `combined.log`.
+
+### Configuración
+
+El proyecto utiliza variables de entorno para la configuración. Las variables de entorno se definen en un archivo `.env`. Aquí está un ejemplo de las variables de entorno necesarias:
+
+```
+REDIS_HOST=localhost
+REDIS_PORT=6379
+SERVER_PORT=3001
+API_KEY=pcldETTDtJ4CQVz9FqlJYHgIvdYP1iXU
+```
+
+### Estructura del Proyecto
+
+```
+.
+├── src
+│   ├── controllers
+│   │   ├── recursosController.js
+│   │   └── sensoresController.js
+│   ├── middlewares
+│   │   └── apiKey.js
+│   ├── services
+│   │   └── redisService.js
+│   ├── app.js
+│   ├── redisClient.js
+│   └── server.js
+├── tests
+│   └── redisApi.test.js
+├── .env
+├── index.js
+└── package.json
+```
+
+### Ejecución de tests
+
+Para implementar y ejecutar los tests, he utilizado `Supertest` para simular solicitudes HTTP y verificar la lógica de negocio clave en los endpoints. Los tests se ejecutan de forma centralizada con `npm test`, tanto en local como en Jenkins.
+
 
 ## Índice
 - [Características](#características)
