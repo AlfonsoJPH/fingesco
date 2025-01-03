@@ -84,11 +84,7 @@ API_KEY=pcldETTDtJ4CQVz9FqlJYHgIvdYP1iXU
 Para implementar y ejecutar los tests, he utilizado `Supertest` para simular solicitudes HTTP y verificar la lógica de negocio clave en los endpoints. Los tests se ejecutan de forma centralizada con `npm test`, tanto en local como en Jenkins.
 
 
-### 
-
-# Hito 4: Composición de servicios
-
-## Documentación y justificación de la estructura del clúster de contenedores
+## Hito 4: Composición de servicios
 
 ### Estructura del clúster de contenedores
 
