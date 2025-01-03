@@ -1,4 +1,4 @@
-name: Build and Push Docker image
+name: Build and Push Docker images
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  build-frontend:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,6 +26,30 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: ./fingesco-frontend
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/fingesco:latest
+          tags: ghcr.io/${{ github.repository_owner }}/fingesco-frontend:latest
+
+  build-endpoint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ secrets.GITHUB_USERNAME }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./fingesco-endpoint
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/fingesco-endpoint:latest
