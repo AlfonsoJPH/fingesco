@@ -1,0 +1,34 @@
+services:
+  - type: web
+    name: frontend
+    env: docker
+    plan: free
+    dockerfilePath: ./fingesco-frontend/Dockerfile
+    envVars:
+      - key: REACT_APP_API_BASE_URL
+        value: http://endpoint:3001
+      - key: REACT_APP_API_KEY
+        value: pcldETTDtJ4CQVz9FqlJYHgIvdYP1iXU
+    buildCommand: docker build -t frontend -f ./fingesco-frontend/Dockerfile .
+
+  - type: web
+    name: endpoint
+    env: docker
+    plan: free
+    dockerfilePath: ./fingesco-endpoint/Dockerfile
+    envVars:
+      - key: REDIS_HOST
+        value: redis
+      - key: REDIS_PORT
+        value: 6379
+      - key: SERVER_PORT
+        value: 3001
+      - key: API_KEY
+        value: pcldETTDtJ4CQVz9FqlJYHgIvdYP1iXU
+    buildCommand: docker build -t endpoint -f ./fingesco-endpoint/Dockerfile .
+
+  - type: redis
+    name: redis
+    plan: free
+    ipAllowList: []
+
