@@ -1,21 +1,24 @@
 services:
   - type: web
     name: frontend
-    env: docker
+    env: node
     plan: free
-    dockerfilePath: ./fingesco-frontend/Dockerfile
+    preBuildCommand: git submodule update --init --recursive
+    buildCommand: npm install --prefix fingesco-frontend
+    startCommand: npm start --prefix fingesco-frontend
     envVars:
       - key: REACT_APP_API_BASE_URL
         value: http://endpoint:3001
       - key: REACT_APP_API_KEY
         value: pcldETTDtJ4CQVz9FqlJYHgIvdYP1iXU
-    buildCommand: docker build -t frontend -f ./fingesco-frontend/Dockerfile .
 
   - type: web
     name: endpoint
-    env: docker
+    env: node
     plan: free
-    dockerfilePath: ./fingesco-endpoint/Dockerfile
+    preBuildCommand: git submodule update --init --recursive
+    buildCommand: npm install --prefix fingesco-endpoint
+    startCommand: npm start --prefix fingesco-endpoint
     envVars:
       - key: REDIS_HOST
         value: redis
@@ -25,7 +28,6 @@ services:
         value: 3001
       - key: API_KEY
         value: pcldETTDtJ4CQVz9FqlJYHgIvdYP1iXU
-    buildCommand: docker build -t endpoint -f ./fingesco-endpoint/Dockerfile .
 
   - type: redis
     name: redis

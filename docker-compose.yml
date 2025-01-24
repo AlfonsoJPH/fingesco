@@ -14,7 +14,7 @@ services:
     ports:
       - "3000:80"
     environment:
-      - REACT_APP_API_BASE_URL=http://192.168.1.133:3001
+      - REACT_APP_API_BASE_URL=http://endpoint:3001
       - REACT_APP_API_KEY=pcldETTDtJ4CQVz9FqlJYHgIvdYP1iXU
     depends_on:
       - endpoint
