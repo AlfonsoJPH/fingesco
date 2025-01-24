@@ -2,35 +2,56 @@ services:
   - type: web
     name: frontend
     env: node
+    repo: https://github.com/AlfonsoJPH/fingesco-frontend
+    branch: main
     plan: free
-    preBuildCommand: git submodule update --init --recursive
-    buildCommand: npm install --prefix fingesco-frontend
-    startCommand: npm start --prefix fingesco-frontend
+    buildCommand: npm install 
+    startCommand: npm start
     envVars:
       - key: REACT_APP_API_BASE_URL
-        value: http://endpoint:3001
+        fromService:
+          type: web
+          name: endpoint
+          property: host
       - key: REACT_APP_API_KEY
         value: pcldETTDtJ4CQVz9FqlJYHgIvdYP1iXU
+      - key: REACT_APP_DOMAIN
+        value: onrender.com 
+    region: frankfurt
 
   - type: web
     name: endpoint
     env: node
+    repo: https://github.com/AlfonsoJPH/fingesco-endpoint
+    branch: main
     plan: free
-    preBuildCommand: git submodule update --init --recursive
-    buildCommand: npm install --prefix fingesco-endpoint
-    startCommand: npm start --prefix fingesco-endpoint
+    buildCommand: npm install
+    startCommand: npm start
     envVars:
       - key: REDIS_HOST
-        value: redis
+        fromService: # Reference a property from another service (see available properties below)
+          type: redis
+          name: redis
+          property: host      
       - key: REDIS_PORT
-        value: 6379
+        fromService:
+          type: redis
+          name: redis
+          property: port
       - key: SERVER_PORT
-        value: 3001
+        fromService:
+          type: web
+          name: endpoint
+          property: port
       - key: API_KEY
         value: pcldETTDtJ4CQVz9FqlJYHgIvdYP1iXU
+    region: frankfurt
 
   - type: redis
     name: redis
-    plan: free
-    ipAllowList: []
-
+    ipAllowList: # Required
+      - source: 0.0.0.0/0
+        description: everywhere
+    plan: free # Default: starter
+    maxmemoryPolicy: noeviction # Default: allkeys-lru
+    region: frankfurt
