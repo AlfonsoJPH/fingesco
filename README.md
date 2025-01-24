@@ -201,6 +201,59 @@ El contenedor se ha publicado correctamente en GitHub Packages y se ha configura
 
 Para ejecutar el clúster y validar su funcionamiento, se ha añadido un test que construye el clúster y responde a algunas peticiones en jenkins siguiendo la metodologia del hito 2.
 
+
+## Hito 5: Despliegue de la aplicación en un PaaS
+
+### Descripción
+
+El objetivo de este hito es desplegar la aplicación desarrollada en un PaaS (Plataforma como Servicio) para familiarizarse con las técnicas de despliegue desde un repositorio web a un PaaS. Para este hito, he seleccionado Render como el PaaS para desplegar la aplicación.
+
+### Justificación de la elección del PaaS
+
+He elegido Render como el PaaS para desplegar la aplicación por las siguientes razones:
+
+1. **Facilidad de uso**: Render proporciona una interfaz intuitiva y fácil de usar para desplegar aplicaciones directamente desde un repositorio de GitHub.
+2. **Despliegue automático**: Render permite configurar despliegues automáticos desde GitHub, lo que facilita el proceso de despliegue continuo.
+3. **Compatibilidad con Docker y Node.js**: Render soporta aplicaciones basadas en Docker y Node.js, lo cual es ideal para mi proyecto.
+4. **Servidores en Europa**: Render ofrece la opción de desplegar aplicaciones en servidores ubicados en Europa, lo que asegura el cumplimiento del GDPR (Reglamento General de Protección de Datos).
+
+### Herramientas usadas para el despliegue
+
+Para el despliegue de la aplicación en Render, he utilizado las siguientes herramientas:
+
+1. **Render Blueprints**: He utilizado un archivo [render.yaml](render.yaml) para definir la configuración de la infraestructura y los servicios necesarios para el despliegue de la aplicación.
+2. **GitHub**: He configurado el repositorio de GitHub para que Render pueda acceder y desplegar la aplicación automáticamente al hacer un `push` al repositorio.
+
+### Configuración para el despliegue automático
+
+La configuración para el despliegue automático en Render se ha definido en el archivo [render.yaml](render.yaml). Este archivo especifica los servicios necesarios, los comandos de construcción y arranque, y las variables de entorno requeridas para el despliegue.
+
+### Funcionamiento del despliegue
+
+El despliegue en Render ha sido exitoso y la aplicación funciona correctamente. La configuración en el archivo 
+
+render.yaml
+
+ asegura que todos los servicios necesarios (frontend, backend y Redis) se desplieguen y funcionen correctamente.
+
+### Pruebas de las prestaciones de la aplicación
+
+He realizado pruebas para asegurarme de que la aplicación desplegada en Render funciona correctamente. Las pruebas incluyen la verificación de las rutas de la API, la conexión a Redis y la correcta visualización del frontend.
+![deployed](images/deployed.png)
+
+![frontend](images/frontend.png)
+
+### URL de la aplicación desplegada
+
+La aplicación desplegada en Render está disponible en la siguiente URL:
+[fingesco](https://frontend-ewsv.onrender.com/)
+
+
+### Conclusión
+
+El despliegue de la aplicación en Render ha sido exitoso y cumple con los requisitos del hito 5. La configuración en el archivo [render.yaml](render.yaml) permite reproducir la infraestructura y desplegar el proyecto automáticamente desde GitHub. Además, el uso de servidores en Europa asegura el cumplimiento del GDPR.
+
+
 ## Índice
 - [Características](#características)
 - [Estructura del Repositorio](#estructura-del-repositorio)
